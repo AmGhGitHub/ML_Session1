@@ -4,33 +4,35 @@ import pandas as pd
 
 
 def gradient_descent(x, y):
-    m_curr = b_curr = 0
-    max_iter = 100
-    n = float(len(x))
+    m = b = 0
+    max_iter = 100000
     lr = 0.001
-    vals = np.zeros((max_iter, 4))
-    for _iter in range(max_iter):
-        y_predict = m_curr * x + b_curr
+    parameters_values = np.zeros((max_iter, 3))
+    iter_number = 0
+    max_mse = 1e-4
+    mse = 1.0
+    n = float(len(x))
+    while iter_number < max_iter and mse > max_mse:
+        y_predict = m * x + b
         md = -(2 / n) * np.sum(x * (y + -y_predict))
         bd = -(2 / n) * np.sum(y - y_predict)
-        m_curr -= lr * md
-        b_curr -= lr * bd
-        cost_val = np.sum(np.square(y - y_predict)) / n
-        vals[_iter][0] = _iter
-        vals[_iter][1] = m_curr
-        vals[_iter][2] = b_curr
-        vals[_iter][3] = cost_val
-        # print(f'Iter:{i}-->m={m_curr:.4f} b={b_curr:.4f} cost={cost_val:.4f}')
+        m -= lr * md
+        b -= lr * bd
+        mse = np.sum(np.square(y - y_predict)) / n
+        parameters_values[iter_number][0] = m
+        parameters_values[iter_number][1] = b
+        parameters_values[iter_number][2] = mse
+        iter_number += 1
 
-    df = pd.DataFrame(data=vals, columns=['iter', 'm', 'b', 'mse'])
-    df.set_index(['iter'], inplace=True)
+    df = pd.DataFrame(data=parameters_values[:iter_number, :], columns=['m', 'b', 'mse'])
     return df
 
 
 if __name__ == '__main__':
-    x = np.array([1, 2, 3, 4, 5])
-    y = np.array([5, 7, 9, 11, 13])
-    df_m_b_mse = gradient_descent(x, y)
+    x_val = np.array([1, 2, 3, 4, 5])
+    y_val = np.array([5, 7, 9, 11, 13])
+    df_m_b_mse = gradient_descent(x_val, y_val)
+
     fig, ax = plt.subplots(nrows=1, ncols=3)
 
     for i, ax_ in enumerate(ax):
