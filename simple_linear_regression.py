@@ -9,7 +9,7 @@ X = df_capita.iloc[:, 0].values
 y = df_capita.iloc[:, 1].values
 X = X[:, np.newaxis]
 y = y[:, np.newaxis]
-poly_dg = 2
+poly_dg = 3
 scaler = PolynomialFeatures(degree=poly_dg)
 X2 = scaler.fit_transform(X)
 
@@ -27,8 +27,8 @@ print(plr.score(X2, y))
 fig, ax = plt.subplots()
 
 ax.scatter(X, y, label='Data Points', color='black', s=30, marker='o')
-ax.plot(X, y_prd_slr, color='blue', linewidth=4, label='Fitted line')
-ax.plot(X, y_prd_plr, color='green', linewidth=4, label=f'Polynomial degree {poly_dg}')
+ax.plot(X, y_prd_slr, color='blue', linewidth=3, label='Fitted line')
+ax.plot(X, y_prd_plr, color='green', linewidth=3, label=f'Polynomial degree {poly_dg}')
 #ax.vlines(X, y, slr.predict(X), colors='red', linestyles='--', label='residuals')
 ax.grid(True)
 ax.legend(loc=0)
