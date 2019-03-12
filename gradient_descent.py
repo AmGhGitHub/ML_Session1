@@ -6,22 +6,24 @@ import pandas as pd
 def gradient_descent(x, y):
     m = b = 0
     max_iter = 100000
-    lr = 0.001
+    # play with learning rate and see how impactful it is on the convergence speed
+    lr = 0.01
+    # lr=0.08
     parameters_values = np.zeros((max_iter, 3))
     iter_number = 0
-    max_mse = 1e-4
+    max_mse = 1e-5
     mse = 1.0
     n = float(len(x))
     while iter_number < max_iter and mse > max_mse:
         y_predict = m * x + b
-        md = -(2 / n) * np.sum(x * (y + -y_predict))
-        bd = -(2 / n) * np.sum(y - y_predict)
-        m -= lr * md
-        b -= lr * bd
         mse = np.sum(np.square(y - y_predict)) / n
         parameters_values[iter_number][0] = m
         parameters_values[iter_number][1] = b
         parameters_values[iter_number][2] = mse
+        md = -(2 / n) * np.sum(x * (y + -y_predict))
+        bd = -(2 / n) * np.sum(y - y_predict)
+        m -= lr * md
+        b -= lr * bd
         iter_number += 1
 
     df = pd.DataFrame(data=parameters_values[:iter_number, :], columns=['m', 'b', 'mse'])
