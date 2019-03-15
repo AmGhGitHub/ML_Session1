@@ -1,2 +1,2 @@
 ## Machine Learning Session 1
-_lets talk about machine learning`_
+_Finally lets talk about machine learning_
