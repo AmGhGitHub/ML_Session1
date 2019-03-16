@@ -13,7 +13,7 @@ def gradient_descent(x, y):
     lr = 0.01
     parameters_values = np.zeros((max_iter + 1, 3))
     iter_number = 0
-    max_mse = 1e-5
+    max_mse = 1e-6
     mse = 1.0
     m = len(x)
     while iter_number <= max_iter and mse >= max_mse:

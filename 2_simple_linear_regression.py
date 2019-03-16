@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
-df_values = pd.read_csv('data/linear_model_data.csv', header=[0])
+df_values = pd.read_csv('data/linear_model_data_1.csv', header=[0])
 df_values_train = df_values.iloc[0::2, ]
 df_values_test = df_values.iloc[1::2, ]
 
@@ -19,7 +19,7 @@ y_test = df_values_test.iloc[:, 1].values
 X_test = X_test[:, np.newaxis]
 y_test = y_test[:, np.newaxis]
 
-poly_dg = 3
+poly_dg = 20
 poly_transf = PolynomialFeatures(degree=poly_dg)
 X_train_transformed = poly_transf.fit_transform(X_train)
 X_test_transformed = poly_transf.transform(X_test)
@@ -33,7 +33,7 @@ poly_model.fit(X_train_transformed, y_train)
 y_predict_simple = simple_model.predict(X_test)
 y_predict_poly = poly_model.predict(X_test_transformed)
 
-print(f'Simple model:           R^2={r2_score(y_test, y_predict_simple) * 100:.2f}% -- MSE={mean_squared_error(y_test, y_predict_simple) :.2f} -- MAE={mean_absolute_error(y_test, y_predict_simple) :.2f}')
+print(f'Simple model:             2_simple_linear_regression.pyR^2={r2_score(y_test, y_predict_simple) * 100:.2f}% -- MSE={mean_squared_error(y_test, y_predict_simple) :.2f} -- MAE={mean_absolute_error(y_test, y_predict_simple) :.2f}')
 print(f'Polynomial model (n={poly_dg}): R^2={r2_score(y_test, y_predict_poly) * 100:.2f}% -- MSE={mean_squared_error(y_test, y_predict_poly):.2f} -- MAE={mean_absolute_error(y_test, y_predict_poly):.2f}')
 
 fig, ax = plt.subplots()
