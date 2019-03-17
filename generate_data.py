@@ -1,12 +1,26 @@
+"""
+Author: Amir Ghaderi
+Date: 15 March 2019
+This class is aim at generation quasi-random value pairs
+using straight line approach
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
-from collections import OrderedDict
-
-np.random.seed(42)
 
 
 class GenerateData:
+
     def __init__(self, x_min, x_max, n_points, slope, intercept, noisy=True):
+        '''
+        :param x_min:
+        :param x_max:
+        :param n_points:
+        :param slope:
+        :param intercept:
+        :param noisy:
+        '''
+        np.random.seed(42)
         self.__noise = np.zeros((1, n_points))
         if noisy:
             self.__noise = np.random.randn(n_points)
@@ -16,6 +30,10 @@ class GenerateData:
         self.intercept = intercept
 
     def plot(self, plot_fit=True):
+        '''
+        :param plot_fit: True or False
+        :return: the data canvas
+        '''
         fig, ax = plt.subplots(nrows=1, ncols=1)
         ax.scatter(self.x, self.y, label='data points', c='red')
         if plot_fit:

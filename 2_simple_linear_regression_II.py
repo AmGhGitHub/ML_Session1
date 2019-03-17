@@ -6,12 +6,12 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
 
 def f(x):
-    # return np.exp(-x ** 2) + 1.5 * np.exp(-(x - 2) ** 2) + 0.025 * np.random.randn(len(x), 1)
-    return np.cos(1.5 * np.pi * x) + 0.0 * np.random.randn(len(x), 1)
+    return np.exp(-x ** 2) + 1.5 * np.exp(-(x - 2) ** 2) + 0.025 * np.random.randn(len(x), 1)
+    #return np.cos(1.5 * np.pi * x) + 0.0 * np.random.randn(len(x), 1)
 
 
 n_points = 100
-x = np.linspace(-2, 2, n_points)
+x = np.linspace(-4, 4, n_points)
 indices = np.random.permutation(x.shape[0])
 train_size = int(n_points * 0.6)
 training_idx, test_idx = indices[:train_size], indices[train_size:]

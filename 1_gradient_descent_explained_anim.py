@@ -4,7 +4,7 @@ import pandas as pd
 import generate_data as gd
 from sklearn.linear_model import LinearRegression
 import matplotlib.animation as animation
-plt.rcParams['animation.ffmpeg_path'] = 'C:\\Users\\WorkingUser\\Desktop\\bin'
+
 
 def gradient_descent(x, y):
     beta0 = beta1 = 0
@@ -33,37 +33,44 @@ def gradient_descent(x, y):
     return df
 
 
-if __name__ == '__main__':
-    data_points = gd.GenerateData(
-        x_min=0, x_max=5, n_points=10,
-        slope=-2, intercept=3,
-        noisy=False)
-
-    data_points.plot()
-
-    x_val = data_points.x
-    y_val = data_points.y
-    print(np.vstack((x_val, y_val)))
-
-    df_m_b_mse = gradient_descent(x_val, y_val)
-    print(f'Iter={df_m_b_mse.index[-1]:,} \u03B21={df_m_b_mse.iloc[-1, 1]:.2f} \u03B20={df_m_b_mse.iloc[-1, 0]:.2f}')
-    lr = LinearRegression().fit(x_val[:, np.newaxis], y_val[:, np.newaxis])
-    print(f'ML: \u03B21={lr.coef_[0, 0]:.2f} \u03B20={lr.intercept_[0]:.2f}')
+def plot_grd_results(df):
     fig, ax = plt.subplots(nrows=1, ncols=3)
     fig.tight_layout()
     font_dict = dict(size=16, weight='bold')
-    for i, (ax_, c, ls, lw) in enumerate(zip(ax, ['#84d127', '#84d127', '#d18a26'], ['--', '--', '-'], [3] * 3)):
-        df_m_b_mse[df_m_b_mse.columns[i]].plot(ax=ax_, lw=lw, c=c, ls=ls)
-        if i == 2:
+    for counter, (ax_, c, ls, lw) in enumerate(
+            zip(ax, ['#84d127', '#84d127', '#d18a26'], ['--', '--', '-'], [3] * 3)):
+        df[df.columns[counter]].plot(ax=ax_, lw=lw, c=c, ls=ls)
+        if counter == 2:
             ax_.set_yscale('log')
         ax_.set_xlabel('iterations', fontdict=font_dict)
-        ax_.set_ylabel(df_m_b_mse.columns[i], fontdict=font_dict)
+        ax_.set_ylabel(df.columns[counter], fontdict=font_dict)
 
         tick_font_size = 14
         for tick in ax_.xaxis.get_major_ticks():
             tick.label.set_fontsize(tick_font_size)
         for tick in ax_.yaxis.get_major_ticks():
             tick.label.set_fontsize(tick_font_size)
+
+    return fig
+
+
+if __name__ == '__main__':
+    data_points = gd.GenerateData(
+        x_min=0, x_max=5, n_points=10,
+        slope=-2, intercept=3,
+        noisy=False)
+    data_points.plot()
+
+    x_val = data_points.x
+    y_val = data_points.y
+
+    df_m_b_mse = gradient_descent(x_val, y_val)
+    slr = LinearRegression().fit(x_val[:, np.newaxis], y_val[:, np.newaxis])
+
+    print(f'Iter={df_m_b_mse.index[-1]:,} \u03B21={df_m_b_mse.iloc[-1, 1]:.2f} \u03B20={df_m_b_mse.iloc[-1, 0]:.2f}')
+    print(f'ML: \u03B21={slr.coef_[0, 0]:.2f} \u03B20={slr.intercept_[0]:.2f}')
+
+    plot_grd_results(df_m_b_mse)
 
 
     def update(i):
@@ -84,9 +91,6 @@ if __name__ == '__main__':
 
     ax.set_ylabel("Y")
     ax.set_xlabel("X")
-    #ax.set_title('AI by AG: Cost Function Minimization', font_dict={'size': 16, 'weight': 'bold'})
+    ax.set_title('AI by AG: Cost Function Minimization')
     ax.legend()
     plt.show()
-
-
-
