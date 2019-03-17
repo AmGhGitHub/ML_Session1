@@ -8,6 +8,7 @@ the above phrase can be split into two parts:
 ### 7 Steps of Machine Learning
 #### 1- Data Gathering
 #### 2- Data Preparation
-##### Put all data together and remove not useful data
+##### Put all data together and remove not useful data like duplicated data
 ##### Randomize the order 
 ##### Split the  data between training and evaluation set
+#### 3- Model Selection
