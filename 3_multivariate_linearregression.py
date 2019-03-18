@@ -80,7 +80,7 @@ plt.tight_layout()
 # plt.show()
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
-lr = LinearRegression(copy_X=True, normalize=False)
+lr = LinearRegression()
 lr.fit(X_train, y_train)
 print(f'R^2 for linear model without feature scaling: {r2_score(y_test, lr.predict(X_test)) * 100:.3f}%')
 print(f'MSE for linear model without feature scaling: {mean_squared_error(y_test, lr.predict(X_test)):.3f}')
@@ -91,9 +91,15 @@ min_max_scale = MinMaxScaler()
 X_train_norm = min_max_scale.fit_transform(X_train)
 X_test_norm = min_max_scale.transform(X_test)
 
-lr_norm = LinearRegression(copy_X=True)
+lr_norm = LinearRegression()
 lr_norm.fit(X_train_norm, y_train)
 print(f'\n\nR^2 for linear model with feature scaling: {r2_score(y_test, lr_norm.predict(X_test_norm)) * 100:.3f}%')
 print(f'MSE for linear model wit feature scaling: {mean_squared_error(y_test, lr_norm.predict(X_test_norm)):.3f}')
 print(f'MAE for linear model wit feature scaling: {mean_absolute_error(y_test, lr_norm.predict(X_test_norm)):.3f}')
 df_coeff_norm = pd.DataFrame(zip(X.columns, lr_norm.coef_), columns=['feature', 'Coeff'])
+
+lr_eq = ""
+for i, feature in enumerate(X.columns):
+    lr_eq += f'{lr_norm.coef_[i]:.2f}*{feature}'
+
+print(lr_eq)

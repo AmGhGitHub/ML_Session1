@@ -87,11 +87,10 @@ if __name__ == '__main__':
     line, = ax.plot(x_val, np.zeros(len(x_val)), label='Fit line', color='blue')
     time_text = ax.text(x_val.max() * .8, y_val.max() * .5, '')
 
-
     ani = animation.FuncAnimation(fig, update, interval=100, blit=True)
 
     ax.set_ylabel("Y")
     ax.set_xlabel("X")
-    ax.set_title('AI by AG: Cost Function Minimization')
+    ax.set_title('Cost Function Minimization')
     ax.legend()
     plt.show()
