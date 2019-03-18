@@ -83,9 +83,10 @@ if __name__ == '__main__':
 
 
     fig, ax = plt.subplots()
+    ax.plot(x_val, y_val, color='red', marker='o', linestyle="", label='Training data')
     line, = ax.plot(x_val, np.zeros(len(x_val)), label='Fit line', color='blue')
     time_text = ax.text(x_val.max() * .8, y_val.max() * .5, '')
-    ax.plot(x_val, y_val, color='red', marker='o', linestyle="", label='Training data')
+
 
     ani = animation.FuncAnimation(fig, update, interval=100, blit=True)
 

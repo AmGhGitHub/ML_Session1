@@ -35,7 +35,7 @@ class GenerateData:
         :return: the data canvas
         '''
         fig, ax = plt.subplots(nrows=1, ncols=1)
-        ax.scatter(self.x, self.y, label='data points', c='red')
+        ax.plot(self.x, self.y, 'ro', label='data points')
         if plot_fit:
             ax.plot(self.x, self.slope * self.x + self.intercept, label=f'y={self.slope:.2f}x+{self.intercept:.2f}',
                     color='blue')
