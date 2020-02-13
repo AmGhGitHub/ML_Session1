@@ -11,7 +11,7 @@ def gradient_descent(x, y):
     max_iter = 1000000
     # play with learning rate and see how impactful it is on the convergence speed
     # lr = 0.01
-    lr = 0.01
+    lr = 0.001
     parameters_values = np.zeros((max_iter + 1, 3))
     iter_number = 0
     max_mse = 1e-6
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     data_points = gd.GenerateData(
         x_min=0, x_max=5, n_points=10,
         slope=-2, intercept=3,
-        noisy=False)
+        noisy=True)
     data_points.plot()
 
     x_val = data_points.x
